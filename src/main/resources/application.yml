@@ -1,0 +1,79 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: finalyzer
+  sql:
+    init:
+      mode: always
+
+  datasource:
+    url: jdbc:mysql://192.168.64.104:3306/finalyzer?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: finalyzer
+    password: finalyzerpass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: always   # ?? ????? ?? ??
+
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}   # ?? ??? ?? ??
+      base-url: https://api.openai.com/v1/
+      model: gpt-4
+      temperature: 0.7
+
+logging:
+  level:
+    root: INFO
+    com.bocopile: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
+
+  metrics:
+    tags:
+      application: finalyzer
+    export:
+      otlp:
+        enabled: true
+        url: http://otel-collector.otel.svc.cluster.local:4317   # K8s ?? ?? (?? ??)
+        step: 30s
+      prometheus:
+        enabled: true
+
+  tracing:
+    enabled: true
+
+etf:
+  client:
+    yahoo:
+      base-url: "https://apidojo-yahoo-finance-v1.p.rapidapi.com"
+      api-host: "apidojo-yahoo-finance-v1.p.rapidapi.com"
+      api-key: "96374d6675msh11d8fe94b529a74p170303jsn5cda4e5b1632"
+    naver:
+      url-template: "https://finance.naver.com/item/sise_day.nhn?code=%s&page=1"
+      user-agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"

@@ -1,2 +1,3 @@
-# Finalyzer
-ETF, 제무재표 등 경제 분석
+
+#
+docker buildx build --platform linux/amd64 -t finalyzer-app .
