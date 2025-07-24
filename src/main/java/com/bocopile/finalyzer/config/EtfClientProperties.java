@@ -6,13 +6,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = "etf.client")
 public class EtfClientProperties {
-    private Yahoo yahoo = new Yahoo();
+    private Vantage vantage = new Vantage();
     private Naver naver = new Naver();
 
     @Data
-    public static class Yahoo {
-        private String baseUrl;
-        private String apiHost;
+    public static class Vantage {
+        private String url;
+        private String function;
         private String apiKey;
     }
 

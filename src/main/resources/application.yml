@@ -9,12 +9,13 @@ spring:
       mode: always
 
   datasource:
-    url: jdbc:mysql://192.168.64.104:3306/finalyzer?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.65.12:3306/finalyzer?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: finalyzer
     password: finalyzerpass
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: update
     properties:
@@ -70,10 +71,10 @@ management:
 
 etf:
   client:
-    yahoo:
-      base-url: "https://apidojo-yahoo-finance-v1.p.rapidapi.com"
-      api-host: "apidojo-yahoo-finance-v1.p.rapidapi.com"
-      api-key: "96374d6675msh11d8fe94b529a74p170303jsn5cda4e5b1632"
+    vantage:
+      url: "https://www.alphavantage.co/query"
+      function: "TIME_SERIES_DAILY"
+      api-key: "BPFW7GPDD8ZEEG5V"
     naver:
       url-template: "https://finance.naver.com/item/sise_day.nhn?code=%s&page=1"
       user-agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"

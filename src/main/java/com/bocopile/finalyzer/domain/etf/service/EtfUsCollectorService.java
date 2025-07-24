@@ -1,7 +1,7 @@
 package com.bocopile.finalyzer.domain.etf.service;
 
 
-import com.bocopile.finalyzer.external.etf.client.YahooFinanceClient;
+import com.bocopile.finalyzer.external.etf.client.AlphaVantageEtfClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -11,11 +11,11 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class EtfUsCollectorService {
 
-    private final YahooFinanceClient yahooClient;
+    private final AlphaVantageEtfClient alphaVantageEtfClient;
     private final EtfCollectorCommonService commonService;
 
     public void collectAndSave(String symbol, LocalDate targetDate) {
-        commonService.collectAndSave(symbol, targetDate, "US", yahooClient::fetchPrice);
+        commonService.collectAndSave(symbol, targetDate, "US", alphaVantageEtfClient::fetchPrice);
     }
 }
 
