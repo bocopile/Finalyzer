@@ -63,7 +63,7 @@ public class KrFinanceClient {
             }
 
         } catch (Exception e) {
-            log.error("❌ Naver Finance 크롤링 실패 - symbol={}, error={}", symbol, e.getMessage(), e);
+            log.error("Naver Finance 크롤링 실패 - symbol={}, error={}", symbol, e.getMessage(), e);
         }
 
         return Optional.empty();
