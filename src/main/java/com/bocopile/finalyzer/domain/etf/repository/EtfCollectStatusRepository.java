@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface EtfCollectStatusRepository extends JpaRepository<EtfCollectStatus, Long> {
     List<EtfCollectStatus> findByStatusAndCollectType(Status status, CollectType collectType);
+    List<EtfCollectStatus> findByStatusAndCollectTypeAndTargetDate(Status status, CollectType collectType, LocalDate targetDate);
     Optional<EtfCollectStatus> findBySymbolAndTargetDateAndMarket(String symbol, LocalDate targetDate, String market);
 
 }

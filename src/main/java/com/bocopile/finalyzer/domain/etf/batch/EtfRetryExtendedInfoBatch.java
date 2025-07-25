@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 @Slf4j
@@ -24,11 +26,13 @@ public class EtfRetryExtendedInfoBatch {
     private final EtfUsCollectorService usCollectorService;
     private final EtfCollectStatusService statusService;
 
-    @Scheduled(cron = "0 30 2 * * *", zone = "Asia/Seoul") // 매일 02:30 재시도
+    @Scheduled(cron = "0 30 * * * *", zone = "Asia/Seoul") // 매일 02:30 재시도
     public void retryFailedExtendedInfoCollections() {
         log.info("📌 ETF ExtendedInfo 재시도 시작");
 
-        List<EtfCollectStatus> failedList = statusRepository.findByStatusAndCollectType(Status.FAILED, CollectType.EXTENDED_INFO);
+        LocalDate targetDate = LocalDate.now(ZoneId.of("Asia/Seoul"));
+        // ETF 상세 정보는 당일날 데이터만 조회가 가능하므로.. 이전 데이터는 불가
+        List<EtfCollectStatus> failedList = statusRepository.findByStatusAndCollectTypeAndTargetDate(Status.FAILED, CollectType.EXTENDED_INFO, targetDate );
 
         for (EtfCollectStatus status : failedList) {
             boolean success = false;
@@ -36,9 +40,9 @@ public class EtfRetryExtendedInfoBatch {
 
             try {
                 if ("KR".equalsIgnoreCase(status.getMarket())) {
-                    krCollectorService.collectExtendedInfo(status.getTargetDate(), CollectType.EXTENDED_INFO);
+                    krCollectorService.collectExtendedInfo(status.getSymbol(), status.getTargetDate());
                 } else if ("US".equalsIgnoreCase(status.getMarket())) {
-                    usCollectorService.collectExtendedInfo(status.getTargetDate(), CollectType.EXTENDED_INFO);
+                    usCollectorService.collectExtendedInfo(status.getSymbol(), status.getTargetDate());
                 }
                 success = true;
             } catch (Exception e) {
