@@ -7,7 +7,6 @@ spring:
   sql:
     init:
       mode: always
-
   datasource:
     url: jdbc:mysql://192.168.65.12:3306/finalyzer?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: finalyzer
@@ -27,14 +26,7 @@ spring:
     job:
       enabled: true
     jdbc:
-      initialize-schema: always   # ?? ????? ?? ??
-
-  ai:
-    openai:
-      api-key: ${OPENAI_API_KEY}   # ?? ??? ?? ??
-      base-url: https://api.openai.com/v1/
-      model: gpt-4
-      temperature: 0.7
+      initialize-schema: always
 
 logging:
   level:
@@ -61,7 +53,7 @@ management:
     export:
       otlp:
         enabled: true
-        url: http://otel-collector.otel.svc.cluster.local:4317   # K8s ?? ?? (?? ??)
+        url: http://otel-opentelemetry-collector.tracing.svc.cluster.local:4317   # K8s ?? ?? (?? ??)
         step: 30s
       prometheus:
         enabled: true
