@@ -40,7 +40,7 @@ public class EtfDaliyPriceService {
     }
 
     private void saveOrUpdatePrice(EtfDailyPrice newPrice) {
-        repository.findBySymbolAndDate(newPrice.getSymbol(), newPrice.getTargetDate())
+        repository.findBySymbolAndTargetDate(newPrice.getSymbol(), newPrice.getTargetDate())
                 .ifPresentOrElse(existing -> {
                     updatePrice(existing, newPrice);
                     repository.save(existing);

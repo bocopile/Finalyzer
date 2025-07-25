@@ -7,5 +7,5 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface EtfDailyPriceRepository extends JpaRepository<EtfDailyPrice, Long> {
-    Optional<EtfDailyPrice> findBySymbolAndDate(String symbol, LocalDate date);
+    Optional<EtfDailyPrice> findBySymbolAndTargetDate(String symbol, LocalDate targetDate);
 }

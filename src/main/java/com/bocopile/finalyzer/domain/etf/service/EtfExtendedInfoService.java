@@ -28,7 +28,7 @@ public class EtfExtendedInfoService {
     ) {
         try {
             fetchFunction.apply(symbol, targetDate).ifPresentOrElse(newInfo -> {
-                repository.findBySymbolAndMarketAndCollectedDate(
+                repository.findBySymbolAndMarketAndTargetDate(
                         newInfo.getSymbol(),
                         newInfo.getMarket().toString(),
                         newInfo.getTargetDate()

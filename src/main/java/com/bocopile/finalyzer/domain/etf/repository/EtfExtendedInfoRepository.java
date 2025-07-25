@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface EtfExtendedInfoRepository extends JpaRepository<EtfExtendedInfo, Long> {
 
-    Optional<EtfExtendedInfo> findBySymbolAndMarketAndCollectedDate(
+    Optional<EtfExtendedInfo> findBySymbolAndMarketAndTargetDate(
             String symbol,
             String market,
             LocalDate collectedDate

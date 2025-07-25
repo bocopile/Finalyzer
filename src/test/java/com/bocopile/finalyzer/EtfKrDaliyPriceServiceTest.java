@@ -43,7 +43,7 @@ class EtfKrDaliyPriceServiceTest {
 
             krService.collectDaliyPrice(symbol, targetDate);
 
-            Optional<EtfDailyPrice> fetched = priceRepository.findBySymbolAndDate(symbol, targetDate);
+            Optional<EtfDailyPrice> fetched = priceRepository.findBySymbolAndTargetDate(symbol, targetDate);
             if (fetched.isPresent()) {
                 log.info("수집 성공 - {} / {}", symbol, targetDate);
             } else {
