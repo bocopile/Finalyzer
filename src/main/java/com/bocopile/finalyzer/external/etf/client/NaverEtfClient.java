@@ -19,7 +19,7 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class KrFinanceClient {
+public class NaverEtfClient {
 
     private final EtfClientProperties properties;
 

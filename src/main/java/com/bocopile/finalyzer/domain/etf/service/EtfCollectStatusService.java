@@ -2,6 +2,7 @@ package com.bocopile.finalyzer.domain.etf.service;
 
 import com.bocopile.finalyzer.domain.etf.entity.EtfCollectStatus;
 
+import com.bocopile.finalyzer.domain.etf.enums.CollectType;
 import com.bocopile.finalyzer.domain.etf.enums.Status;
 import com.bocopile.finalyzer.domain.etf.repository.EtfCollectStatusRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class EtfCollectStatusService {
 
     private final EtfCollectStatusRepository statusRepository;
 
-    public void saveStatus(String symbol, LocalDate date, String market, Status status, String errorMessage) {
+    public void saveStatus(String symbol, LocalDate date, String market, Status status, String errorMessage, CollectType collectType) {
         Optional<EtfCollectStatus> existingOpt = statusRepository.findBySymbolAndTargetDateAndMarket(symbol, date, market);
 
         if (existingOpt.isPresent()) {
@@ -30,6 +31,7 @@ public class EtfCollectStatusService {
             existing.setErrorMessage(errorMessage);
             existing.setLastUpdated(LocalDateTime.now());
             existing.setRetryCount(newRetryCount);
+            existing.setCollectType(collectType);
             statusRepository.save(existing);
 
         } else {
@@ -42,6 +44,7 @@ public class EtfCollectStatusService {
                     .created(LocalDateTime.now())
                     .lastUpdated(LocalDateTime.now())
                     .retryCount(0)
+                    .collectType(collectType)
                     .build();
             statusRepository.save(newStatus);
         }

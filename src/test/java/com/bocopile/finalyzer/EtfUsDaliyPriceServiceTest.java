@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @SpringBootTest
-class EtfUsCollectorServiceTest {
+class EtfUsDaliyPriceServiceTest {
 
     @Autowired
     private EtfUsCollectorService usService;
@@ -41,7 +41,7 @@ class EtfUsCollectorServiceTest {
             String symbol = etf.getSymbol();
             log.info("미국 ETF 수집 시작 - {}", symbol);
 
-            usService.collectAndSave(symbol, targetDate);
+            usService.collectDaliyPrice(symbol, targetDate);
 
             Optional<EtfDailyPrice> fetched = priceRepository.findBySymbolAndDate(symbol, targetDate);
             if (fetched.isPresent()) {

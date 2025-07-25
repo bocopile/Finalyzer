@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class EtfBatchScheduler {
+public class EtfDailyPriceBatch {
 
     private final EtfSymbolRepository etfSymbolRepository;
     private final EtfUsCollectorService etfUsCollectorService;
@@ -25,13 +25,13 @@ public class EtfBatchScheduler {
 
     @Scheduled(cron = "0 0 6 * * *", zone = "America/New_York")
     public void runUsEtfCollectionJob(){
-        log.info("📈 미국 ETF 수집 배치 시작");
+        log.info("미국 ETF 수집 배치 시작");
         List<EtfSymbol> usSymbols = etfSymbolRepository.findByMarketAndIsActiveTrue(MarketType.US);
         LocalDate targetDate = LocalDate.now(ZoneId.of("America/New_York"));
 
         usSymbols.forEach(etf -> {
             try {
-                etfUsCollectorService.collectAndSave(etf.getSymbol(), targetDate);
+                etfUsCollectorService.collectDaliyPrice(etf.getSymbol(), targetDate);
             } catch (Exception e) {
                 log.error("미국 ETF 수집 실패 - symbol: {}", etf.getSymbol(), e);
             }
@@ -47,7 +47,7 @@ public class EtfBatchScheduler {
 
         krSymbols.forEach(etf -> {
             try {
-                etfKrCollectorService.collectAndSave(etf.getSymbol(), targetDate);
+                etfKrCollectorService.collectDaliyPrice(etf.getSymbol(), targetDate);
             } catch (Exception e) {
                 log.error("한국 ETF 수집 실패 - symbol: {}", etf.getSymbol(), e);
             }

@@ -70,3 +70,10 @@ etf:
     naver:
       url-template: "https://finance.naver.com/item/sise_day.nhn?code=%s&page=1"
       user-agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+    etfdb:
+      base-url: "https://etfdb.com/etf/%s/"
+      # 예: https://etfdb.com/etf/SPY/
+      user-agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+    kodex:
+      base-url: "https://m.samsungfund.com/etf/main.do?symbol=%s"
+      user-agent: "Mozilla/5.0 (compatible; FinalyzerBot/1.0)"
