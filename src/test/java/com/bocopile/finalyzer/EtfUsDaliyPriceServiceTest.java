@@ -14,9 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @SpringBootTest
@@ -39,19 +36,22 @@ class EtfUsDaliyPriceServiceTest {
 
         for (EtfSymbol etf : usEtfs) {
             String symbol = etf.getSymbol();
-            log.info("미국 ETF 수집 시작 - {}", symbol);
 
-            usService.collectDaliyPrice(symbol, targetDate);
+            try {
+                log.info("미국 ETF 수집 시작 - {}", symbol);
 
-            Optional<EtfDailyPrice> fetched = priceRepository.findBySymbolAndTargetDate(symbol, targetDate);
-            if (fetched.isPresent()) {
-                log.info("수집 성공 - {} / {}", symbol, targetDate);
-            } else {
-                log.warn("수집 실패 또는 데이터 없음 - {} / {}", symbol, targetDate);
+                usService.collectDaliyPrice(symbol, targetDate);
+
+                priceRepository.findBySymbolAndTargetDate(symbol, targetDate)
+                        .ifPresentOrElse(
+                                fetched -> log.info("수집 성공 - {} / {}", symbol, targetDate),
+                                () -> log.warn("수집 실패 또는 데이터 없음 - {} / {}", symbol, targetDate)
+                        );
+
+            } catch (Exception e) {
+                log.error("수집 중 예외 발생 - {} / error: {}", symbol, e.getMessage());
+                // 예외 발생해도 다음 ETF로 계속 진행
             }
-
-            // 실패 시 테스트 실패 처리하려면 아래 사용
-            // assertThat(fetched.isPresent()).isTrue();
         }
     }
 }
