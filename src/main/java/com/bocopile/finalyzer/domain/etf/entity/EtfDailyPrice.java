@@ -3,6 +3,7 @@ package com.bocopile.finalyzer.domain.etf.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(
         name = "etf_daily_price",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"symbol", "date"})
+                @UniqueConstraint(columnNames = {"symbol", "targetDate"})
         }
 )
 @Getter
@@ -32,7 +33,7 @@ public class EtfDailyPrice {
 
     // 해당 날짜의 시세 (LocalDate: 시간 제외)
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDate targetDate;
 
     @Column(precision = 16, scale = 4)
     private BigDecimal openPrice;
@@ -46,9 +47,11 @@ public class EtfDailyPrice {
     @Column(precision = 16, scale = 4)
     private BigDecimal closePrice;
 
-    @Column
     private Long volume;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDateTime created;
+
+    @UpdateTimestamp
+    private LocalDateTime lastUpdated;
 }

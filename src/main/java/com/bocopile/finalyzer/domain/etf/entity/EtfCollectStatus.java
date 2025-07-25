@@ -1,9 +1,12 @@
 package com.bocopile.finalyzer.domain.etf.entity;
 
+import com.bocopile.finalyzer.domain.etf.enums.CollectType;
+import com.bocopile.finalyzer.domain.etf.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(
         name = "etf_collect_status",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"symbol", "targetDate", "market"})
+                @UniqueConstraint(columnNames = {"symbol", "targetDate", "market", "collectType"})
         }
 )
 @Getter
@@ -38,17 +41,19 @@ public class EtfCollectStatus {
 
     private String errorMessage;
 
-    @CreatedDate
-    private LocalDateTime createdAt;
+    @CreationTimestamp
+    private LocalDateTime created;
 
-    @LastModifiedDate
-    private LocalDateTime lastAttemptedAt;
+    @UpdateTimestamp
+    private LocalDateTime lastUpdated;
 
     private int retryCount;
 
-    public enum Status {
-        SUCCESS,
-        FAILED,
-        RETRY_EXCEEDED // 5회 이상 실패한 경우
-    }
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CollectType collectType;  // DAILY_PRICE, EXTENDED_INFO, NEWS, REPORT
+
+
+
+
 }

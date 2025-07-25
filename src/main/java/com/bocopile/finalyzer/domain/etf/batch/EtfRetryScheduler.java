@@ -1,7 +1,8 @@
 package com.bocopile.finalyzer.domain.etf.batch;
 
 import com.bocopile.finalyzer.domain.etf.entity.EtfCollectStatus;
-import com.bocopile.finalyzer.domain.etf.entity.EtfCollectStatus.Status;
+import com.bocopile.finalyzer.domain.etf.enums.CollectType;
+import com.bocopile.finalyzer.domain.etf.enums.Status;
 import com.bocopile.finalyzer.domain.etf.repository.EtfCollectStatusRepository;
 import com.bocopile.finalyzer.domain.etf.service.EtfCollectStatusService;
 import com.bocopile.finalyzer.domain.etf.service.EtfKrCollectorService;
@@ -29,7 +30,7 @@ public class EtfRetryScheduler {
 
         List<EtfCollectStatus> failedList;
         try {
-            failedList = statusRepository.findByStatus(Status.FAILED);
+            failedList = statusRepository.findByStatusAndCollectType(Status.FAILED, CollectType.DAILY_PRICE);
         } catch (Exception e) {
             log.error("수집 실패 목록 조회 중 예외 발생", e);
             return;

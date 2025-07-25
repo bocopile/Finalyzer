@@ -2,7 +2,7 @@ package com.bocopile.finalyzer;
 
 import com.bocopile.finalyzer.domain.etf.entity.EtfDailyPrice;
 import com.bocopile.finalyzer.domain.etf.entity.EtfSymbol;
-import com.bocopile.finalyzer.domain.etf.entity.EtfSymbol.MarketType;
+import com.bocopile.finalyzer.domain.etf.enums.MarketType;
 import com.bocopile.finalyzer.domain.etf.repository.EtfDailyPriceRepository;
 import com.bocopile.finalyzer.domain.etf.repository.EtfSymbolRepository;
 import com.bocopile.finalyzer.domain.etf.service.EtfUsCollectorService;

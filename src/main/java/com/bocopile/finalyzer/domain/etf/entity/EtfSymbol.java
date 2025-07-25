@@ -1,5 +1,6 @@
 package com.bocopile.finalyzer.domain.etf.entity;
 
+import com.bocopile.finalyzer.domain.etf.enums.MarketType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +36,4 @@ public class EtfSymbol {
 
     private boolean isActive;
 
-    public enum MarketType {
-        US, KR
-    }
 }

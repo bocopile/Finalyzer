@@ -1,6 +1,7 @@
 package com.bocopile.finalyzer.domain.etf.batch;
 
 import com.bocopile.finalyzer.domain.etf.entity.EtfSymbol;
+import com.bocopile.finalyzer.domain.etf.enums.MarketType;
 import com.bocopile.finalyzer.domain.etf.repository.EtfSymbolRepository;
 import com.bocopile.finalyzer.domain.etf.service.EtfKrCollectorService;
 import com.bocopile.finalyzer.domain.etf.service.EtfUsCollectorService;
@@ -25,7 +26,7 @@ public class EtfBatchScheduler {
     @Scheduled(cron = "0 0 6 * * *", zone = "America/New_York")
     public void runUsEtfCollectionJob(){
         log.info("📈 미국 ETF 수집 배치 시작");
-        List<EtfSymbol> usSymbols = etfSymbolRepository.findByMarketAndIsActiveTrue(EtfSymbol.MarketType.US);
+        List<EtfSymbol> usSymbols = etfSymbolRepository.findByMarketAndIsActiveTrue(MarketType.US);
         LocalDate targetDate = LocalDate.now(ZoneId.of("America/New_York"));
 
         usSymbols.forEach(etf -> {
@@ -41,7 +42,7 @@ public class EtfBatchScheduler {
     @Scheduled(cron = "0 0 9 * * *", zone = "Asia/Seoul")
     public void runKrEtfCollectionJob() {
         log.info("한국 ETF 수집 배치 시작");
-        List<EtfSymbol> krSymbols = etfSymbolRepository.findByMarketAndIsActiveTrue(EtfSymbol.MarketType.KR);
+        List<EtfSymbol> krSymbols = etfSymbolRepository.findByMarketAndIsActiveTrue(MarketType.KR);
         LocalDate targetDate = LocalDate.now(ZoneId.of("Asia/Seoul"));
 
         krSymbols.forEach(etf -> {

@@ -41,7 +41,7 @@ public class AlphaVantageEtfClient {
                 return Optional.of(
                         EtfDailyPrice.builder()
                                 .symbol(symbol)
-                                .date(targetDate)
+                                .targetDate(targetDate)
                                 .openPrice(new BigDecimal(node.path("1. open").asText()))
                                 .highPrice(new BigDecimal(node.path("2. high").asText()))
                                 .lowPrice(new BigDecimal(node.path("3. low").asText()))

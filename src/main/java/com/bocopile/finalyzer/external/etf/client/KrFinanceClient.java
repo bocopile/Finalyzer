@@ -52,7 +52,7 @@ public class KrFinanceClient {
                 return Optional.of(
                         EtfDailyPrice.builder()
                                 .symbol(symbol)
-                                .date(rowDate)
+                                .targetDate(rowDate)
                                 .openPrice(open)
                                 .highPrice(high)
                                 .lowPrice(low)
