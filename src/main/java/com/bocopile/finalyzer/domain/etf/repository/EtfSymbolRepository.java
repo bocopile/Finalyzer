@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface EtfSymbolRepository extends JpaRepository<EtfSymbol, Long> {
     List<EtfSymbol> findByMarketAndIsActiveTrue(MarketType market);
-   ;
+
 
 }
